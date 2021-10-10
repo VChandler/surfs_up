@@ -19,6 +19,24 @@ Client W. Avy has requested an analysis of temperature data for the months of Ju
 
 Overall, the two months are remarkably similar with similar high temperatures and somewhat similar means.  The average day in either month is over 70 degrees, which is warm enough to support an ice cream and surf shop, and both months have the potential to get significantly warmer (especially in December, though technically "winter").
 
-There are other factors to consider as well, including precipitation.
+There are other factors to consider as well, including precipitation.  In December:  
+![dec-prcp](https://user-images.githubusercontent.com/88070999/136681446-d0cea873-0449-4360-9c68-e214366b22be.png)  
+Code to generate:
+```
+decprcp = []
+decprcp = session.query(Measurement.prcp).filter(extract('month', Measurement.date) == 12).all()
+dec_prcp_df = pd.DataFrame(decprcp, columns=['December Precipitation'])
+dec_prcp_df.describe()
+```
 
-There is a high-level summary of the results and there are two additional queries to perform to gather more weather data for June and December. (5 pt)
+In June:  
+![jun-prcp](https://user-images.githubusercontent.com/88070999/136681434-e7ba1414-609d-4199-bc69-0c139aa27f73.png)  
+Code to generate:  
+```
+junprcp = []
+junprcp = session.query(Measurement.prcp).filter(extract('month', Measurement.date) == 6).all()
+jun_prcp_df = pd.DataFrame(junprcp, columns=['June Precipitation'])
+jun_prcp_df.describe()
+```
+
+The data above shows that there is more precipitation on average in December, though the 50th percentile of days barely registers any precipitation.  In other words, both months have quite a few days of no precipitation, further lending support to a decision to build a surf and ice cream shop.
